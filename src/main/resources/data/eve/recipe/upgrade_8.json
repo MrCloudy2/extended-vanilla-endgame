@@ -1,0 +1,6 @@
+{
+	"type": "eve:upgrade",
+	"template": "eve:upgrade_core_8",
+	"addition": "minecraft:heavy_core",
+	"level": 8
+}

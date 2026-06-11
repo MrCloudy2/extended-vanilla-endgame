@@ -1,0 +1,10 @@
+{
+	"type": "minecraft:smithing_transform",
+	"template": "eve:wing_smithing_template",
+	"base": "minecraft:netherite_chestplate",
+	"addition": "minecraft:elytra",
+	"result": {
+		"id": "eve:winged_netherite_chestplate",
+		"count": 1
+	}
+}

@@ -1,0 +1,18 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"category": "misc",
+	"pattern": [
+		"PNP",
+		"NSN",
+		"PNP"
+	],
+	"key": {
+		"P": "minecraft:phantom_membrane",
+		"N": "minecraft:netherite_ingot",
+		"S": "minecraft:nether_star"
+	},
+	"result": {
+		"id": "eve:wing_smithing_template",
+		"count": 1
+	}
+}

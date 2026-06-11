@@ -1,0 +1,6 @@
+{
+	"type": "eve:upgrade",
+	"template": "eve:upgrade_core_1",
+	"addition": "minecraft:diamond_block",
+	"level": 1
+}

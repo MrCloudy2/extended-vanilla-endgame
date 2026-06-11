@@ -1,0 +1,23 @@
+{
+	"schemaVersion": 1,
+	"id": "eve",
+	"version": "${version}",
+	"name": "Extended Vanilla Endgame",
+	"description": "Keeps Minecraft exactly vanilla until the endgame, where tools and armor can be upgraded to +1, +2, +3... at ever-increasing cost.",
+	"authors": [
+		"rok"
+	],
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.rok.eve.EVE"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

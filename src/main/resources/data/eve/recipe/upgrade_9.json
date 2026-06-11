@@ -1,0 +1,6 @@
+{
+	"type": "eve:upgrade",
+	"template": "eve:upgrade_core_9",
+	"addition": "minecraft:nether_star",
+	"level": 9
+}

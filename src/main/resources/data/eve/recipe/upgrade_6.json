@@ -1,0 +1,6 @@
+{
+	"type": "eve:upgrade",
+	"template": "eve:upgrade_core_6",
+	"addition": "minecraft:netherite_block",
+	"level": 6
+}

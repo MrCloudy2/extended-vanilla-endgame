@@ -1,0 +1,15 @@
+{
+	"item.eve.wing_smithing_template": "Wing Smithing Template",
+	"item.eve.winged_netherite_chestplate": "Winged Netherite Chestplate",
+	"item.eve.upgrade_level": "Upgrade +%s",
+	"item.eve.upgrade_core_1": "Upgrade Core +1",
+	"item.eve.upgrade_core_2": "Upgrade Core +2",
+	"item.eve.upgrade_core_3": "Upgrade Core +3",
+	"item.eve.upgrade_core_4": "Upgrade Core +4",
+	"item.eve.upgrade_core_5": "Upgrade Core +5",
+	"item.eve.upgrade_core_6": "Upgrade Core +6",
+	"item.eve.upgrade_core_7": "Upgrade Core +7",
+	"item.eve.upgrade_core_8": "Upgrade Core +8",
+	"item.eve.upgrade_core_9": "Upgrade Core +9",
+	"item.eve.upgrade_core_10": "Upgrade Core +10"
+}

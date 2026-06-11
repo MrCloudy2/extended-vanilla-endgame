@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"category": "misc",
+	"ingredients": [
+		"eve:upgrade_core_2",
+		"eve:upgrade_core_2"
+	],
+	"result": {
+		"id": "eve:upgrade_core_3",
+		"count": 1
+	}
+}
