@@ -8,6 +8,7 @@
 		"rok"
 	],
 	"license": "MIT",
+	"icon": "assets/eve/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
