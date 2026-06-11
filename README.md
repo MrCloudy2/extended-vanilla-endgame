@@ -1,5 +1,7 @@
 # Extended Vanilla Endgame (EVE)
 
+![Minecraft 26.1.x](https://img.shields.io/badge/Minecraft-26.1.x-brightgreen) ![Fabric](https://img.shields.io/badge/Loader-Fabric-blue) ![Java 25](https://img.shields.io/badge/Java-25-orange)
+
 A Fabric mod for Minecraft **26.1.2** that keeps the game exactly vanilla until the endgame, then lets you upgrade netherite tools and armor to **+1 through +10** — with costs that roughly double every level.
 
 ## How it works
