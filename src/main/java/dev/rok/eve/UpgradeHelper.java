@@ -107,7 +107,13 @@ public final class UpgradeHelper {
 		float multiplier = 1.0f + MINING_SPEED_PER_LEVEL * level;
 		List<Tool.Rule> rules = base.rules().stream()
 				.map(rule -> new Tool.Rule(rule.blocks(),
-						rule.speed().map(speed -> speed * multiplier),
+						rule.speed().map(speed -> {
+							// Swords have a Float.MAX_VALUE "instantly mines" rule; scaling it
+							// overflows to Infinity, which fails the POSITIVE_FLOAT codec and
+							// corrupts the stack. Keep such speeds as-is.
+							float scaled = speed * multiplier;
+							return Float.isFinite(scaled) ? scaled : speed;
+						}),
 						rule.correctForDrops()))
 				.toList();
 
