@@ -12,6 +12,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -56,13 +57,19 @@ public class UpgradeRecipe extends SimpleSmithingRecipe {
 	public boolean matches(SmithingRecipeInput input, Level level) {
 		return this.template.test(input.template())
 				&& input.base().is(EVE.UPGRADABLE)
+				&& this.level <= UpgradeHelper.maxLevel(input.base())
 				&& UpgradeHelper.getLevel(input.base()) == this.level - 1
 				&& this.addition.test(input.addition());
 	}
 
 	@Override
 	public ItemStack assemble(SmithingRecipeInput input) {
-		return UpgradeHelper.upgrade(input.base().copyWithCount(1), this.level);
+		// A vanilla sponge transforms into the mod's absorbing sponge on its
+		// first upgrade; everything else keeps its identity.
+		ItemStack result = input.base().is(Items.SPONGE)
+				? new ItemStack(EVE.ABSORBING_SPONGE_ITEM)
+				: input.base().copyWithCount(1);
+		return UpgradeHelper.upgrade(result, this.level);
 	}
 
 	@Override

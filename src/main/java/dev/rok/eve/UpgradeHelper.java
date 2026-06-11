@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.Tool;
@@ -25,12 +26,18 @@ import net.minecraft.world.item.equipment.Equippable;
  */
 public final class UpgradeHelper {
 	public static final int MAX_LEVEL = 10;
+	public static final int SPONGE_MAX_LEVEL = 7;
 
 	public static final double ATTACK_DAMAGE_PER_LEVEL = 1.0;
 	public static final double ARMOR_PER_LEVEL = 1.0;
 	public static final double TOUGHNESS_PER_LEVEL = 0.5;
 	public static final float MINING_SPEED_PER_LEVEL = 0.2f;
 	public static final float DURABILITY_PER_LEVEL = 0.25f;
+
+	// Sponge absorb depth per tier (index = tier). Water starts at the vanilla
+	// depth of 6; lava starts smaller; each tier alternately grows one of them.
+	private static final int[] SPONGE_WATER_DEPTH = {6, 6, 8, 8, 10, 10, 12, 12};
+	private static final int[] SPONGE_LAVA_DEPTH = {0, 3, 3, 5, 5, 7, 7, 9};
 
 	private UpgradeHelper() {
 	}
@@ -39,13 +46,40 @@ public final class UpgradeHelper {
 		return stack.getOrDefault(EVE.UPGRADE_LEVEL, 0);
 	}
 
+	/** Some items cap below MAX_LEVEL; the smithing recipe checks this. */
+	public static int maxLevel(ItemStack stack) {
+		if (stack.is(Items.SPONGE) || stack.is(EVE.ABSORBING_SPONGE_ITEM)) {
+			return SPONGE_MAX_LEVEL;
+		}
+		return MAX_LEVEL;
+	}
+
+	public static int spongeWaterDepth(int tier) {
+		return SPONGE_WATER_DEPTH[Math.clamp(tier, 1, SPONGE_MAX_LEVEL)];
+	}
+
+	public static int spongeLavaDepth(int tier) {
+		return SPONGE_LAVA_DEPTH[Math.clamp(tier, 1, SPONGE_MAX_LEVEL)];
+	}
+
+	public static ItemLore spongeLore(int tier) {
+		return new ItemLore(List.of(
+				Component.translatable("item.eve.upgrade_level", tier).withStyle(ChatFormatting.GOLD),
+				Component.translatable("item.eve.sponge_radii", spongeWaterDepth(tier), spongeLavaDepth(tier))
+						.withStyle(ChatFormatting.GRAY)));
+	}
+
 	public static ItemStack upgrade(ItemStack stack, int level) {
 		stack.set(EVE.UPGRADE_LEVEL, level);
 		applyAttributes(stack, level);
 		applyMiningSpeed(stack, level);
 		applyDurability(stack, level);
-		stack.set(DataComponents.LORE, new ItemLore(List.of(
-				Component.translatable("item.eve.upgrade_level", level).withStyle(ChatFormatting.GOLD))));
+		if (stack.is(EVE.ABSORBING_SPONGE_ITEM)) {
+			stack.set(DataComponents.LORE, spongeLore(level));
+		} else {
+			stack.set(DataComponents.LORE, new ItemLore(List.of(
+					Component.translatable("item.eve.upgrade_level", level).withStyle(ChatFormatting.GOLD))));
+		}
 		return stack;
 	}
 

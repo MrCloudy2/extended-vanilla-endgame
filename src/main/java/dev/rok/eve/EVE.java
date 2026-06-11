@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
@@ -17,12 +18,18 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.equipment.ArmorMaterials;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.MapColor;
 
 public class EVE implements ModInitializer {
 	public static final String MOD_ID = "eve";
@@ -62,12 +69,41 @@ public class EVE implements ModInitializer {
 					.rarity(Rarity.EPIC)
 					.component(DataComponents.GLIDER, Unit.INSTANCE));
 
+	/**
+	 * Endgame sponge, max +7: absorbs water, and lava from +1 up; never turns
+	 * wet, and the item is fireproof so it survives a swim in its own prey.
+	 */
+	public static final AbsorbingSpongeBlock ABSORBING_SPONGE = registerSpongeBlock();
+	public static final Item ABSORBING_SPONGE_ITEM = registerSpongeItem();
+	public static final BlockEntityType<AbsorbingSpongeBlockEntity> ABSORBING_SPONGE_BLOCK_ENTITY =
+			FabricBlockEntityTypeBuilder.create(AbsorbingSpongeBlockEntity::new, ABSORBING_SPONGE).build();
+
 	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER =
 			new RecipeSerializer<>(UpgradeRecipe.MAP_CODEC, UpgradeRecipe.STREAM_CODEC);
 
 	private static Item registerItem(String name, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id(name));
 		return Registry.register(BuiltInRegistries.ITEM, key, new Item(properties.setId(key)));
+	}
+
+	private static AbsorbingSpongeBlock registerSpongeBlock() {
+		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, id("absorbing_sponge"));
+		return Registry.register(BuiltInRegistries.BLOCK, key, new AbsorbingSpongeBlock(
+				BlockBehaviour.Properties.of()
+						.mapColor(MapColor.COLOR_CYAN)
+						.strength(0.6F)
+						.sound(SoundType.SPONGE)
+						.setId(key)));
+	}
+
+	private static Item registerSpongeItem() {
+		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id("absorbing_sponge"));
+		return Registry.register(BuiltInRegistries.ITEM, key, new BlockItem(ABSORBING_SPONGE,
+				new Item.Properties()
+						.useBlockDescriptionPrefix()
+						.fireResistant()
+						.rarity(Rarity.RARE)
+						.setId(key)));
 	}
 
 	private static List<Item> makeCores() {
@@ -83,6 +119,7 @@ public class EVE implements ModInitializer {
 	public void onInitialize() {
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, id("upgrade_level"), UPGRADE_LEVEL);
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("upgrade"), UPGRADE_SERIALIZER);
+		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("absorbing_sponge"), ABSORBING_SPONGE_BLOCK_ENTITY);
 
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> {
 			UPGRADE_CORES.forEach(output::accept);
@@ -90,5 +127,7 @@ public class EVE implements ModInitializer {
 		});
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(output ->
 				output.accept(WINGED_NETHERITE_CHESTPLATE));
+		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output ->
+				output.accept(ABSORBING_SPONGE_ITEM));
 	}
 }

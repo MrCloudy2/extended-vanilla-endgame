@@ -9,6 +9,8 @@
 		"minecraft:netherite_helmet",
 		"minecraft:netherite_leggings",
 		"minecraft:netherite_boots",
-		"eve:winged_netherite_chestplate"
+		"eve:winged_netherite_chestplate",
+		"minecraft:sponge",
+		"eve:absorbing_sponge"
 	]
 }
