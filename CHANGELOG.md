@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 — for Minecraft 26.1.x
+
+### Added
+- Per-tier textures for all 10 Upgrade Cores, recolored from the vanilla netherite upgrade template with a gold arrow
+- Tier ladder: weathered stone, copper, gold (silver arrow), emerald, diamond, lapis, amethyst, redstone, netherite (ember arrow) — with sparkle glints appearing from +6 and multiplying upward
+- **+10 is animated**: a 12-frame iridescent shimmer cycling through every hue (vanilla resource-pack animation, no code)
+
+### Changed
+- Upgrade Core +1 recipe takes one each of diamond, iron, gold and emerald block (was 4 diamond blocks)
+- Combining cores is now catalyst-free: two cores of a tier = one core of the next
+
 ## 0.2.0 — for Minecraft 26.1.x
 
 ### Updated
