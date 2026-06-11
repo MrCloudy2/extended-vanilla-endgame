@@ -18,6 +18,9 @@ The +1 core is crafted directly:
 
 Every higher core is simply **two cores of the previous tier combined** (shapeless, no extra item), so the raw material cost doubles each level — a +10 core is worth 512 +1 cores.
 
+![Upgrade Core +1 recipe](docs/recipe_core1.png)
+![Combining cores](docs/recipe_combine.png)
+
 ### 2. Upgrade in the smithing table
 
 Smithing table: `Upgrade Core +N` + `your +(N-1) item` + `catalyst`:
@@ -35,7 +38,11 @@ Smithing table: `Upgrade Core +N` + `your +(N-1) item` + `catalyst`:
 | +9 | Nether Star |
 | +10 | Heavy Core |
 
+![Applying an upgrade](docs/recipe_apply.png)
+
 Each level grants (cumulative): **+1 attack damage**, **+1 armor**, **+0.5 armor toughness**, **+20% mining speed**, **+25% durability**. Enchantments and damage are preserved.
+
+![Core tier textures](docs/core_preview2.png)
 
 Upgradable: netherite sword/pickaxe/axe/shovel/hoe/helmet/leggings/boots and the Winged Netherite Chestplate (tag `eve:upgradable` — datapacks can extend it).
 
@@ -49,7 +56,11 @@ A plain netherite chestplate **cannot** be upgraded. First craft a **Wing Smithi
 [Phantom Membrane] [Netherite Ingot] [Phantom Membrane]
 ```
 
+![Wing Smithing Template recipe](docs/recipe_wing_template.png)
+
 Then in the smithing table: `Wing Template` + `Netherite Chestplate` + `Elytra` → **Winged Netherite Chestplate** — full netherite protection *and* elytra flight (vanilla glider component), and it's the only chestplate that accepts +N upgrades.
+
+![Winged Netherite Chestplate recipe](docs/recipe_winged_chestplate.png)
 
 ## Building
 
