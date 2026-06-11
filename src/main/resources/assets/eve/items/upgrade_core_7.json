@@ -1,6 +1,6 @@
 {
 	"model": {
 		"type": "minecraft:model",
-		"model": "eve:item/upgrade_core"
+		"model": "eve:item/upgrade_core_7"
 	}
 }

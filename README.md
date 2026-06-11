@@ -61,5 +61,5 @@ Output: `build/libs/extended-vanilla-endgame-<version>.jar`. Requires Java 25, F
 
 ## TODO
 
-- Custom textures (items currently reuse vanilla textures: echo shard, netherite template, netherite chestplate)
+- Custom textures for the wing template and winged chestplate (upgrade cores now have per-tier recolored textures; the other two still reuse vanilla art)
 - Elytra wings back-rendering for the winged chestplate (flight works, wings just don't show)
