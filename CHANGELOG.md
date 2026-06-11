@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1 — for Minecraft 26.1.x
+
+### Fixed
+- Upgrading swords corrupted the item (rejected inventory clicks, no further upgrades). The sword's vanilla "instantly mines" rule has speed `Float.MAX_VALUE`; the mining-speed bonus overflowed it to Infinity, which fails Minecraft's component validation. Such speeds are now left untouched. Swords upgraded on 0.3.0 should be re-upgraded in the smithing table (this repairs them) or replaced.
+
 ## 0.3.0 — for Minecraft 26.1.x
 
 ### Added
