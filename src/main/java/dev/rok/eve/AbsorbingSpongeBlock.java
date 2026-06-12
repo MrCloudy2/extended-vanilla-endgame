@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.redstone.Orientation;
 
 /**
  * Endgame sponge: absorbs water like a vanilla sponge and, thanks to its
@@ -45,18 +44,10 @@ public class AbsorbingSpongeBlock extends Block implements EntityBlock {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
-		// Components were just applied to the block entity, but read the tier
-		// straight from the stack to be safe.
+		// One absorb per placement: components were just applied to the block
+		// entity, but read the tier straight from the stack to be safe. To
+		// absorb again, break and re-place the sponge.
 		this.absorb(level, pos, Math.max(1, UpgradeHelper.getLevel(stack)));
-	}
-
-	@Override
-	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block block,
-			@Nullable Orientation orientation, boolean movedByPiston) {
-		if (level.getBlockEntity(pos) instanceof AbsorbingSpongeBlockEntity sponge) {
-			this.absorb(level, pos, sponge.getTier());
-		}
-		super.neighborChanged(state, level, pos, block, orientation, movedByPiston);
 	}
 
 	private void absorb(Level level, BlockPos pos, int tier) {
