@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_3",
-	"addition": "minecraft:netherite_block",
+	"addition": "minecraft:gold_block",
 	"level": 3
 }

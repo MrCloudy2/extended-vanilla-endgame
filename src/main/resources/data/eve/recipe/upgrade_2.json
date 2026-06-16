@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_2",
-	"addition": "minecraft:netherite_ingot",
+	"addition": "minecraft:emerald_block",
 	"level": 2
 }

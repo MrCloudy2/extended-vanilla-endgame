@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_4",
-	"addition": "minecraft:nether_star",
+	"addition": "minecraft:diamond",
 	"level": 4
 }

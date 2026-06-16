@@ -25,18 +25,13 @@ Every higher core is simply **two cores of the previous tier combined** (shapele
 
 Smithing table: `Upgrade Core +N` + `your +(N-1) item` + `catalyst`:
 
-| Level | Catalyst |
-|-------|----------|
-| +1 | Diamond Block |
-| +2 | Netherite Ingot |
-| +3 | Netherite Block |
-| +4 | Nether Star |
-| +5 | Heavy Core |
-| +6 | Netherite Block |
-| +7 | Nether Star |
-| +8 | Heavy Core |
-| +9 | Nether Star |
-| +10 | Heavy Core |
+| Level | Catalyst | Level | Catalyst |
+|-------|----------|-------|----------|
+| +1 | Iron Block | +6 | Netherite Ingot |
+| +2 | Emerald Block | +7 | Netherite Block |
+| +3 | Gold Block | +8 | Enchanted Golden Apple |
+| +4 | Diamond | +9 | Nether Star |
+| +5 | Diamond Block | +10 | Heavy Core |
 
 ![Applying an upgrade](docs/recipe_apply.png)
 
@@ -44,7 +39,7 @@ Each level grants (cumulative): **+1 attack damage**, **+1 armor**, **+0.5 armor
 
 ![Core tier textures](docs/core_tiers.png)
 
-Upgradable: netherite sword/pickaxe/axe/shovel/hoe/helmet/leggings/boots and the Winged Netherite Chestplate (tag `eve:upgradable` — datapacks can extend it).
+Upgradable: netherite sword/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, and a plain Sponge (tag `eve:upgradable` — datapacks can extend it).
 
 ### 3. The chestplate gate
 
@@ -61,6 +56,24 @@ A plain netherite chestplate **cannot** be upgraded. First craft a **Wing Smithi
 Then in the smithing table: `Wing Template` + `Netherite Chestplate` + `Elytra` → **Winged Netherite Chestplate** — full netherite protection *and* elytra flight (vanilla glider component), and it's the only chestplate that accepts +N upgrades.
 
 ![Winged Netherite Chestplate recipe](docs/recipe_winged_chestplate.png)
+
+### 4. The Absorbing Sponge
+
+Upgrade a plain **Sponge** in the smithing table (Core +1 + sponge + iron block) and it becomes an **Absorbing Sponge** — a sponge that drinks **lava** as well as water. It can be upgraded up to **+7**.
+
+It behaves like a vanilla sponge with two twists:
+
+- **Reusable.** It sits dry until liquid first touches it, absorbs once, and turns wet (texture change). Breaking it always drops the **dry** sponge back — with its tier intact — so you can place it again and again. (To absorb a second time, just break and re-place it.)
+- **Lava + water radii grow on alternating levels.** Lava always reaches a smaller radius than water:
+
+| Tier | Water radius | Lava radius | Tier | Water radius | Lava radius |
+|------|--------------|-------------|------|--------------|-------------|
+| +1 | 6 | 3 | +5 | 10 | 7 |
+| +2 | 8 | 3 | +6 | 12 | 7 |
+| +3 | 8 | 5 | +7 | 12 | 9 |
+| +4 | 10 | 5 | | | |
+
+The Absorbing Sponge item is fireproof, so it survives a swim in the lava it's meant to drink. It caps at +7 even though Upgrade Cores go to +10.
 
 ## Building
 

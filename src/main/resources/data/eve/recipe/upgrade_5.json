@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_5",
-	"addition": "minecraft:heavy_core",
+	"addition": "minecraft:diamond_block",
 	"level": 5
 }

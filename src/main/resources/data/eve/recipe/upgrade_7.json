@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_7",
-	"addition": "minecraft:nether_star",
+	"addition": "minecraft:netherite_block",
 	"level": 7
 }

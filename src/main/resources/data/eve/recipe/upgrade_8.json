@@ -1,6 +1,6 @@
 {
 	"type": "eve:upgrade",
 	"template": "eve:upgrade_core_8",
-	"addition": "minecraft:heavy_core",
+	"addition": "minecraft:enchanted_golden_apple",
 	"level": 8
 }
