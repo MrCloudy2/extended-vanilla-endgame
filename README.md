@@ -85,5 +85,5 @@ Output: `build/libs/extended-vanilla-endgame-<version>.jar`. Requires Java 25, F
 
 ## TODO
 
-- Custom textures for the wing template and winged chestplate (upgrade cores now have per-tier recolored textures; the other two still reuse vanilla art)
+- Custom texture for the Wing Smithing Template (cores have per-tier recolored textures; the winged chestplate now composites the chestplate over the elytra)
 - Elytra wings back-rendering for the winged chestplate (flight works, wings just don't show)
