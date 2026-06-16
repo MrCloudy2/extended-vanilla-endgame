@@ -13,6 +13,9 @@
 	"entrypoints": {
 		"main": [
 			"dev.rok.eve.EVE"
+		],
+		"jei_mod_plugin": [
+			"dev.rok.eve.compat.jei.EVEJeiPlugin"
 		]
 	},
 	"depends": {
