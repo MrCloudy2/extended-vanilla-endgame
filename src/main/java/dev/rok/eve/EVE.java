@@ -120,8 +120,11 @@ public class EVE implements ModInitializer {
 	private static List<Item> makeCores() {
 		List<Item> cores = new ArrayList<>();
 		for (int level = 1; level <= UpgradeHelper.MAX_LEVEL; level++) {
-			cores.add(registerItem("upgrade_core_" + level,
-					new Item.Properties().rarity(Rarity.RARE).fireResistant()));
+			int tier = level;
+			ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id("upgrade_core_" + level));
+			Item core = Registry.register(BuiltInRegistries.ITEM, key, new UpgradeCoreItem(
+					new Item.Properties().rarity(Rarity.RARE).fireResistant().setId(key), tier));
+			cores.add(core);
 		}
 		return List.copyOf(cores);
 	}

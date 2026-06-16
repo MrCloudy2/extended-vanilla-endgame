@@ -15,5 +15,6 @@
 	"block.eve.absorbing_sponge": "Absorbing Sponge",
 	"item.eve.sponge_radii": "Absorbs water within %s blocks, lava within %s",
 	"category.eve.gear_upgrade": "Gear Upgrade",
-	"category.eve.gear_upgrade.requires": "Requires a +%s item (or the base item for +1)"
+	"category.eve.gear_upgrade.requires": "Requires a +%s item (or the base item for +1)",
+	"item.eve.upgrade_core.catalyst": "Combine with: %s"
 }
