@@ -1,7 +1,10 @@
 {
 	"variants": {
-		"": {
+		"saturated=false": {
 			"model": "eve:block/absorbing_sponge"
+		},
+		"saturated=true": {
+			"model": "eve:block/absorbing_sponge_wet"
 		}
 	}
 }
