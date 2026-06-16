@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.2 — for Minecraft 26.1.x
+
+### Added
+- **Absorbing Sponge**: upgrade a plain sponge (Core +1 + sponge + iron block) into a sponge that drinks lava as well as water, up to +7. It waits dry until liquid first touches it, absorbs once, and turns wet; breaking it always drops the dry sponge back (with its tier), so it is reusable. Water and lava radii grow on alternating levels (lava always smaller); the item is fireproof.
+- Custom item texture for the Winged Netherite Chestplate (netherite chestplate over elytra wings).
+
+### Changed
+- Reworked upgrade catalysts: +1 iron block, +2 emerald block, +3 gold block, +4 diamond, +5 diamond block, +6 netherite ingot, +7 netherite block, +8 enchanted golden apple, +9 nether star, +10 heavy core.
+
 ## 0.3.1 — for Minecraft 26.1.x
 
 ### Fixed
