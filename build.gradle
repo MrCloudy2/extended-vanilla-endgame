@@ -12,6 +12,10 @@ base {
 
 repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
+	maven {
+		name = 'Jared (JEI)'
+		url = 'https://maven.blamejared.com'
+	}
 }
 
 dependencies {
@@ -20,6 +24,11 @@ dependencies {
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// JEI: compile against the API, load the full mod at runtime for testing.
+	// Loom 1.16 auto-remaps mod dependencies on the standard configurations.
+	compileOnly "mezz.jei:jei-${project.jei_mc}-fabric-api:${project.jei_version}"
+	runtimeOnly "mezz.jei:jei-${project.jei_mc}-fabric:${project.jei_version}"
 }
 
 processResources {

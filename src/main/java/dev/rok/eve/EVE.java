@@ -21,6 +21,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.equipment.ArmorMaterials;
@@ -80,6 +81,16 @@ public class EVE implements ModInitializer {
 
 	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER =
 			new RecipeSerializer<>(UpgradeRecipe.MAP_CODEC, UpgradeRecipe.STREAM_CODEC);
+
+	/**
+	 * The per-level smithing catalyst, index 0 = the +1 catalyst. Used by the
+	 * JEI integration for display; this MUST mirror the additions in the
+	 * data/eve/recipe/upgrade_*.json files (which are authoritative for play).
+	 */
+	public static final List<Item> UPGRADE_CATALYSTS = List.of(
+			Items.IRON_BLOCK, Items.EMERALD_BLOCK, Items.GOLD_BLOCK, Items.DIAMOND, Items.DIAMOND_BLOCK,
+			Items.NETHERITE_INGOT, Items.NETHERITE_BLOCK, Items.ENCHANTED_GOLDEN_APPLE, Items.NETHER_STAR,
+			Items.HEAVY_CORE);
 
 	private static Item registerItem(String name, Item.Properties properties) {
 		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id(name));
