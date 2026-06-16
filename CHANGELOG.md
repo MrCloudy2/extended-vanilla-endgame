@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 — for Minecraft 26.1.x
+
+### Added
+- **JEI integration**: a "Gear Upgrade" category showing every tier (+1..+10) as its own entry per upgradable item — the Upgrade Core, the item at +(N-1), the catalyst, and the +N result. Requires JEI (optional). Core crafting, combining, and the winged chestplate already show in JEI's built-in categories.
+- Each Upgrade Core's tooltip now names the catalyst to combine it with (e.g. "Combine with: Block of Iron").
+
 ## 0.3.2 — for Minecraft 26.1.x
 
 ### Added
