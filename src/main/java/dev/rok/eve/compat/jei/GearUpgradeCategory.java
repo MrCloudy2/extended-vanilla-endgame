@@ -64,13 +64,15 @@ public class GearUpgradeCategory implements IRecipeCategory<UpgradeEntry> {
 	public void setRecipe(IRecipeLayoutBuilder builder, UpgradeEntry recipe, IFocusGroup focuses) {
 		builder.addSlot(RecipeIngredientRole.INPUT, 2, 5)
 				.addItemStack(recipe.core());
-		builder.addSlot(RecipeIngredientRole.INPUT, 24, 5)
-				.addItemStacks(recipe.bases())
-				.addRichTooltipCallback((slot, tooltip) -> tooltip.add(
-						Component.translatable("category.eve.gear_upgrade.requires", recipe.level() - 1)));
+		var base = builder.addSlot(RecipeIngredientRole.INPUT, 24, 5)
+				.addItemStack(recipe.base());
+		if (recipe.level() > 1) {
+			base.addRichTooltipCallback((slot, tooltip) -> tooltip.add(
+					Component.translatable("category.eve.gear_upgrade.requires", recipe.level() - 1)));
+		}
 		builder.addSlot(RecipeIngredientRole.INPUT, 46, 5)
 				.addItemStack(recipe.catalyst());
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 96, 5)
-				.addItemStacks(recipe.results());
+				.addItemStack(recipe.result());
 	}
 }
