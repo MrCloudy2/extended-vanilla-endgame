@@ -121,8 +121,10 @@ public class EVE implements ModInitializer {
 		return Registry.register(BuiltInRegistries.BLOCK, key, new UpgradedShulkerBoxBlock(
 				BlockBehaviour.Properties.of()
 						.mapColor(MapColor.COLOR_PURPLE)
+						.forceSolidOn()
 						.strength(2.0F)
-						.sound(SoundType.STONE)
+						.dynamicShape()
+						.noOcclusion()
 						.setId(key)));
 	}
 

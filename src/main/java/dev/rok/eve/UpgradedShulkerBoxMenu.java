@@ -10,17 +10,16 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 /**
- * A 27-slot container menu like a chest's — so it accepts normal items and
- * vanilla shulker boxes — except its box slots reject the upgraded shulker box
- * itself, so you can't nest a +1 box inside a +1 box.
+ * 27-slot menu for the upgraded shulker box. Its slots accept normal items and
+ * vanilla shulker boxes but reject another upgraded box, so a +1 box can't be
+ * nested inside a +1 box.
  *
- * Reuses the vanilla GENERIC_9x3 menu type, so the client renders it with the
- * standard chest screen and no client-side code is needed; the slot rule is
- * enforced server-side (authoritative).
+ * It reuses the vanilla GENERIC_9x3 menu type (chest screen, no client code).
+ * The vanilla shulker menu can't be reused here because its slots reject ALL
+ * shulker boxes on the client; the rule is enforced server-side instead.
  */
 public class UpgradedShulkerBoxMenu extends AbstractContainerMenu {
-	private static final int ROWS = 3;
-	private static final int BOX_SLOTS = ROWS * 9;
+	private static final int BOX_SLOTS = 27;
 
 	private final Container container;
 
@@ -34,18 +33,17 @@ public class UpgradedShulkerBoxMenu extends AbstractContainerMenu {
 		this.container = container;
 		container.startOpen(playerInventory.player);
 
-		for (int row = 0; row < ROWS; row++) {
+		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 9; col++) {
 				this.addSlot(new Slot(container, col + row * 9, 8 + col * 18, 18 + row * 18) {
 					@Override
 					public boolean mayPlace(ItemStack stack) {
-						// Everything but another upgraded shulker box (no +1-in-+1 nesting).
 						return !stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM);
 					}
 				});
 			}
 		}
-		this.addStandardInventorySlots(playerInventory, 8, 18 + ROWS * 18 + 13);
+		this.addStandardInventorySlots(playerInventory, 8, 84);
 	}
 
 	@Override
