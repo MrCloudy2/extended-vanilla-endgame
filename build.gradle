@@ -1,5 +1,5 @@
 plugins {
-	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'net.fabricmc.fabric-loom-remap' version "${loom_version}"
 	id 'maven-publish'
 }
 
@@ -20,15 +20,17 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
 
-	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	// Obfuscated (remap) Loom: mod dependencies must use the mod* configurations
+	// so they are remapped from intermediary to the official names this code uses.
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
 	// JEI: compile against the API, load the full mod at runtime for testing.
-	// Loom 1.16 auto-remaps mod dependencies on the standard configurations.
-	compileOnly "mezz.jei:jei-${project.jei_mc}-fabric-api:${project.jei_version}"
-	runtimeOnly "mezz.jei:jei-${project.jei_mc}-fabric:${project.jei_version}"
+	modCompileOnly "mezz.jei:jei-${project.jei_mc}-fabric-api:${project.jei_version}"
+	modRuntimeOnly "mezz.jei:jei-${project.jei_mc}-fabric:${project.jei_version}"
 }
 
 processResources {
@@ -41,13 +43,13 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 25
+	it.options.release = 21
 }
 
 java {
 	withSourcesJar()
-	sourceCompatibility = JavaVersion.VERSION_25
-	targetCompatibility = JavaVersion.VERSION_25
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 jar {

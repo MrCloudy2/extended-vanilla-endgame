@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
 public class GearUpgradeCategory implements IRecipeCategory<UpgradeEntry> {
@@ -56,7 +56,7 @@ public class GearUpgradeCategory implements IRecipeCategory<UpgradeEntry> {
 	}
 
 	@Override
-	public void draw(UpgradeEntry recipe, IRecipeSlotsView slotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
+	public void draw(UpgradeEntry recipe, IRecipeSlotsView slotsView, GuiGraphics graphics, double mouseX, double mouseY) {
 		this.arrow.draw(graphics, ARROW_X, ARROW_Y);
 	}
 

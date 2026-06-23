@@ -6,7 +6,7 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -19,8 +19,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -79,8 +80,7 @@ public class EVE implements ModInitializer {
 	public static final BlockEntityType<AbsorbingSpongeBlockEntity> ABSORBING_SPONGE_BLOCK_ENTITY =
 			FabricBlockEntityTypeBuilder.create(AbsorbingSpongeBlockEntity::new, ABSORBING_SPONGE).build();
 
-	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER =
-			new RecipeSerializer<>(UpgradeRecipe.MAP_CODEC, UpgradeRecipe.STREAM_CODEC);
+	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER = new UpgradeRecipe.Serializer();
 
 	/**
 	 * The per-level smithing catalyst, index 0 = the +1 catalyst. Used by the
@@ -135,13 +135,18 @@ public class EVE implements ModInitializer {
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("upgrade"), UPGRADE_SERIALIZER);
 		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("absorbing_sponge"), ABSORBING_SPONGE_BLOCK_ENTITY);
 
-		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> {
-			UPGRADE_CORES.forEach(output::accept);
-			output.accept(WING_SMITHING_TEMPLATE);
+		ItemGroupEvents.modifyEntriesEvent(tab("ingredients")).register(entries -> {
+			UPGRADE_CORES.forEach(core -> entries.accept(new ItemStack(core)));
+			entries.accept(new ItemStack(WING_SMITHING_TEMPLATE));
 		});
-		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(output ->
-				output.accept(WINGED_NETHERITE_CHESTPLATE));
-		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output ->
-				output.accept(ABSORBING_SPONGE_ITEM));
+		ItemGroupEvents.modifyEntriesEvent(tab("combat")).register(entries ->
+				entries.accept(new ItemStack(WINGED_NETHERITE_CHESTPLATE)));
+		ItemGroupEvents.modifyEntriesEvent(tab("functional_blocks")).register(entries ->
+				entries.accept(new ItemStack(ABSORBING_SPONGE_ITEM)));
+	}
+
+	/** Vanilla creative-tab fields are private in this version, so build the key from its id. */
+	private static ResourceKey<CreativeModeTab> tab(String id) {
+		return ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.withDefaultNamespace(id));
 	}
 }
