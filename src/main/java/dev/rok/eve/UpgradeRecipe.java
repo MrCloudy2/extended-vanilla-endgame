@@ -64,11 +64,23 @@ public class UpgradeRecipe extends SimpleSmithingRecipe {
 
 	@Override
 	public ItemStack assemble(SmithingRecipeInput input) {
-		// A vanilla sponge transforms into the mod's absorbing sponge on its
-		// first upgrade; everything else keeps its identity.
-		ItemStack result = input.base().is(Items.SPONGE)
-				? new ItemStack(EVE.ABSORBING_SPONGE_ITEM)
-				: input.base().copyWithCount(1);
+		// A vanilla sponge becomes the absorbing sponge, and a vanilla shulker box
+		// becomes the upgraded shulker box (carrying its contents over); everything
+		// else keeps its identity.
+		ItemStack base = input.base();
+		ItemStack result;
+		if (base.is(Items.SPONGE)) {
+			result = new ItemStack(EVE.ABSORBING_SPONGE_ITEM);
+		} else if (base.is(Items.SHULKER_BOX)) {
+			result = new ItemStack(EVE.UPGRADED_SHULKER_BOX_ITEM);
+			net.minecraft.world.item.component.ItemContainerContents contents =
+					base.get(net.minecraft.core.component.DataComponents.CONTAINER);
+			if (contents != null) {
+				result.set(net.minecraft.core.component.DataComponents.CONTAINER, contents);
+			}
+		} else {
+			result = base.copyWithCount(1);
+		}
 		return UpgradeHelper.upgrade(result, this.level);
 	}
 

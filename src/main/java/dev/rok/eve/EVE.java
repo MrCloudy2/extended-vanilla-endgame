@@ -79,6 +79,15 @@ public class EVE implements ModInitializer {
 	public static final BlockEntityType<AbsorbingSpongeBlockEntity> ABSORBING_SPONGE_BLOCK_ENTITY =
 			FabricBlockEntityTypeBuilder.create(AbsorbingSpongeBlockEntity::new, ABSORBING_SPONGE).build();
 
+	/**
+	 * The +1 shulker box: holds normal shulker boxes and any other item (but not
+	 * other +1 boxes). Obtained by upgrading a vanilla shulker box.
+	 */
+	public static final UpgradedShulkerBoxBlock UPGRADED_SHULKER_BOX = registerShulkerBlock();
+	public static final Item UPGRADED_SHULKER_BOX_ITEM = registerShulkerItem();
+	public static final BlockEntityType<UpgradedShulkerBoxBlockEntity> UPGRADED_SHULKER_BOX_BLOCK_ENTITY =
+			FabricBlockEntityTypeBuilder.create(UpgradedShulkerBoxBlockEntity::new, UPGRADED_SHULKER_BOX).build();
+
 	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER =
 			new RecipeSerializer<>(UpgradeRecipe.MAP_CODEC, UpgradeRecipe.STREAM_CODEC);
 
@@ -104,6 +113,26 @@ public class EVE implements ModInitializer {
 						.mapColor(MapColor.COLOR_CYAN)
 						.strength(0.6F)
 						.sound(SoundType.SPONGE)
+						.setId(key)));
+	}
+
+	private static UpgradedShulkerBoxBlock registerShulkerBlock() {
+		ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, id("upgraded_shulker_box"));
+		return Registry.register(BuiltInRegistries.BLOCK, key, new UpgradedShulkerBoxBlock(
+				BlockBehaviour.Properties.of()
+						.mapColor(MapColor.COLOR_PURPLE)
+						.strength(2.0F)
+						.sound(SoundType.STONE)
+						.setId(key)));
+	}
+
+	private static Item registerShulkerItem() {
+		ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, id("upgraded_shulker_box"));
+		return Registry.register(BuiltInRegistries.ITEM, key, new BlockItem(UPGRADED_SHULKER_BOX,
+				new Item.Properties()
+						.useBlockDescriptionPrefix()
+						.stacksTo(1)
+						.rarity(Rarity.RARE)
 						.setId(key)));
 	}
 
@@ -134,6 +163,7 @@ public class EVE implements ModInitializer {
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, id("upgrade_level"), UPGRADE_LEVEL);
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("upgrade"), UPGRADE_SERIALIZER);
 		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("absorbing_sponge"), ABSORBING_SPONGE_BLOCK_ENTITY);
+		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("upgraded_shulker_box"), UPGRADED_SHULKER_BOX_BLOCK_ENTITY);
 
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(output -> {
 			UPGRADE_CORES.forEach(output::accept);
@@ -141,7 +171,9 @@ public class EVE implements ModInitializer {
 		});
 		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.COMBAT).register(output ->
 				output.accept(WINGED_NETHERITE_CHESTPLATE));
-		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output ->
-				output.accept(ABSORBING_SPONGE_ITEM));
+		CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(output -> {
+			output.accept(ABSORBING_SPONGE_ITEM);
+			output.accept(UPGRADED_SHULKER_BOX_ITEM);
+		});
 	}
 }

@@ -51,6 +51,9 @@ public final class UpgradeHelper {
 		if (stack.is(Items.SPONGE) || stack.is(EVE.ABSORBING_SPONGE_ITEM)) {
 			return SPONGE_MAX_LEVEL;
 		}
+		if (stack.is(Items.SHULKER_BOX) || stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM)) {
+			return 1; // shulker box only goes to +1
+		}
 		return MAX_LEVEL;
 	}
 
