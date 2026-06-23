@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 — for Minecraft 1.21.11
+
+### Added
+- Netherite spears can now be upgraded (added to the upgrade system; they gain +1 attack damage and +25% durability per level, and appear in the JEI category).
+
 ## 0.3.3 — for Minecraft 26.1.x
 
 ### Added
