@@ -39,7 +39,7 @@ Each level grants (cumulative): **+1 attack damage**, **+1 armor**, **+0.5 armor
 
 ![Core tier textures](docs/core_tiers.png)
 
-Upgradable: netherite sword/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, and a plain Sponge (tag `eve:upgradable` — datapacks can extend it).
+Upgradable: netherite sword/spear/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, a Sponge, and any Shulker Box (tag `eve:upgradable` — datapacks can extend it).
 
 ### 3. The chestplate gate
 
@@ -74,6 +74,16 @@ It behaves like a vanilla sponge with two twists:
 | +4 | 10 | 5 | | | |
 
 The Absorbing Sponge item is fireproof, so it survives a swim in the lava it's meant to drink. It caps at +7 even though Upgrade Cores go to +10.
+
+### 5. The Upgraded Shulker Box
+
+Upgrade any **Shulker Box** in the smithing table (Core +1 + shulker box + iron block) and it becomes an **Upgraded Shulker Box**. The upgrade keeps the box's **colour and contents**.
+
+It is a real shulker box — same animated lid, texture, and "contents stay in the item when you break it" — with one difference:
+
+- **It can hold normal shulker boxes** (and any other item). In vanilla you can't put a shulker box inside a shulker box; an upgraded box lets you. It will **not** accept another upgraded box, so there's no infinite nesting.
+
+It comes in all 16 colours plus the default, and it's **dyeable** exactly like a vanilla shulker box: combine it with a dye in a crafting grid to recolour it (contents preserved), and re-dye it any time.
 
 ## Building
 
