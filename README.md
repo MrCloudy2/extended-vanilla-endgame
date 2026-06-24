@@ -51,11 +51,11 @@ A plain netherite chestplate **cannot** be upgraded. First craft a **Wing Smithi
 [Phantom Membrane] [Netherite Ingot] [Phantom Membrane]
 ```
 
-![Wing Smithing Template recipe](docs/recipe_wing_template.png)
+![Wing Smithing Template recipe](docs/recipe_wing.png)
 
 Then in the smithing table: `Wing Template` + `Netherite Chestplate` + `Elytra` → **Winged Netherite Chestplate** — full netherite protection *and* elytra flight (vanilla glider component), and it's the only chestplate that accepts +N upgrades.
 
-![Winged Netherite Chestplate recipe](docs/recipe_winged_chestplate.png)
+![Winged Netherite Chestplate recipe](docs/recipe_winged.png)
 
 ### 4. The Absorbing Sponge
 
@@ -94,7 +94,3 @@ It comes in all 16 colours plus the default, and it's **dyeable** exactly like a
 ```
 
 Output: `build/libs/extended-vanilla-endgame-<version>.jar`. Requires Java 25, Fabric Loader ≥ 0.19.3 and Fabric API. Gradle runs on Java 25 (path pinned in `gradle.properties` via `org.gradle.java.home`; adjust for your machine). Uses Mojang official mappings (Yarn was discontinued after 1.21.11).
-
-## TODO
-
-- Elytra wings back-rendering for the winged chestplate (flight works, wings just don't show)

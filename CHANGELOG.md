@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0 — for Minecraft 26.1.x / 26.2
+
+### Added
+- **Upgraded Shulker Box**: upgrade any shulker box (Core +1 + shulker box + iron block) into one that can store normal shulker boxes — but not other upgraded boxes, so no infinite nesting. It's a real shulker box (animated lid, keeps its contents when broken), comes in all 16 colours plus the default, preserves colour and contents through the upgrade, and is dyeable like a vanilla shulker box (combine with a dye to recolour).
+- Custom purpur Wing Smithing Template texture (white arrow).
+
 ## 0.3.4 — for Minecraft 26.1.x
 
 ### Added
