@@ -4,7 +4,7 @@
 		"base": "minecraft:item/green_shulker_box",
 		"model": {
 			"type": "minecraft:shulker_box",
-			"texture": "minecraft:shulker_green"
+			"texture": "eve:upgraded_shulker_green"
 		},
 		"transformation": {
 			"left_rotation": [

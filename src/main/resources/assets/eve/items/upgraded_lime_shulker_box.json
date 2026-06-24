@@ -4,7 +4,7 @@
 		"base": "minecraft:item/lime_shulker_box",
 		"model": {
 			"type": "minecraft:shulker_box",
-			"texture": "minecraft:shulker_lime"
+			"texture": "eve:upgraded_shulker_lime"
 		},
 		"transformation": {
 			"left_rotation": [

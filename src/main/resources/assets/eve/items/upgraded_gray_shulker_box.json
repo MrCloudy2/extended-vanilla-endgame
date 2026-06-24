@@ -4,7 +4,7 @@
 		"base": "minecraft:item/gray_shulker_box",
 		"model": {
 			"type": "minecraft:shulker_box",
-			"texture": "minecraft:shulker_gray"
+			"texture": "eve:upgraded_shulker_gray"
 		},
 		"transformation": {
 			"left_rotation": [

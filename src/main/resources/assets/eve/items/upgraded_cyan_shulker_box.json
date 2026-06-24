@@ -4,7 +4,7 @@
 		"base": "minecraft:item/cyan_shulker_box",
 		"model": {
 			"type": "minecraft:shulker_box",
-			"texture": "minecraft:shulker_cyan"
+			"texture": "eve:upgraded_shulker_cyan"
 		},
 		"transformation": {
 			"left_rotation": [
