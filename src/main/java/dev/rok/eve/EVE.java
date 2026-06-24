@@ -7,16 +7,23 @@ import java.util.Map;
 
 import com.mojang.serialization.Codec;
 
+import dev.rok.eve.mixin.CauldronDispatcherInvoker;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.cauldron.CauldronInteraction;
+import net.minecraft.core.cauldron.CauldronInteractions;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.Identifier;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
@@ -205,5 +212,24 @@ public class EVE implements ModInitializer {
 				output.accept(UPGRADED_SHULKER_ITEMS.get(color));
 			}
 		});
+
+		registerShulkerWashing();
+	}
+
+	/** Washing a coloured upgraded shulker box in a water cauldron resets it to the
+	 *  default colour (keeping contents) and uses one water level, like vanilla shulkers. */
+	private static void registerShulkerWashing() {
+		CauldronInteraction wash = (state, level, pos, player, hand, stack) -> {
+			if (!level.isClientSide()) {
+				ItemStack cleaned = stack.transmuteCopy(upgradedShulkerDefaultItem, 1);
+				player.setItemInHand(hand, ItemUtils.createFilledResult(stack, player, cleaned, false));
+				player.awardStat(Stats.CLEAN_SHULKER_BOX);
+				LayeredCauldronBlock.lowerFillLevel(state, level, pos);
+			}
+			return InteractionResult.SUCCESS;
+		};
+		for (DyeColor color : DyeColor.values()) {
+			((CauldronDispatcherInvoker) CauldronInteractions.WATER).eve$put(UPGRADED_SHULKER_ITEMS.get(color), wash);
+		}
 	}
 }
