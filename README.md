@@ -79,6 +79,8 @@ The Absorbing Sponge item is fireproof, so it survives a swim in the lava it's m
 
 Upgrade any **Shulker Box** in the smithing table (Core +1 + shulker box + iron block) and it becomes an **Upgraded Shulker Box**. The upgrade keeps the box's **colour and contents**.
 
+![Upgraded Shulker Box recipe](docs/recipe_shulker.png)
+
 It is a real shulker box — same animated lid, texture, and "contents stay in the item when you break it" — with one difference:
 
 - **It can hold normal shulker boxes** (and any other item). In vanilla you can't put a shulker box inside a shulker box; an upgraded box lets you. It will **not** accept another upgraded box, so there's no infinite nesting.
@@ -95,5 +97,4 @@ Output: `build/libs/extended-vanilla-endgame-<version>.jar`. Requires Java 25, F
 
 ## TODO
 
-- Custom texture for the Wing Smithing Template (cores have per-tier recolored textures; the winged chestplate now composites the chestplate over the elytra)
 - Elytra wings back-rendering for the winged chestplate (flight works, wings just don't show)
