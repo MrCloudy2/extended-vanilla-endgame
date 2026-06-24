@@ -9,6 +9,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 
 /**
  * One JEI entry per (upgradable item, level): the Upgrade Core and catalyst for
@@ -38,8 +40,13 @@ public record UpgradeEntry(int level, ItemStack core, ItemStack catalyst, ItemSt
 				}
 
 				ItemStack base = level == 1 ? new ItemStack(item) : UpgradeHelper.upgrade(new ItemStack(item), level - 1);
-				Item resultItem = item == Items.SPONGE ? EVE.ABSORBING_SPONGE_ITEM : item;
-				ItemStack result = UpgradeHelper.upgrade(new ItemStack(resultItem), level);
+				ItemStack result;
+				if (Block.byItem(item) instanceof ShulkerBoxBlock shulker) {
+					result = new ItemStack(EVE.upgradedShulkerItem(shulker.getColor()));
+				} else {
+					Item resultItem = item == Items.SPONGE ? EVE.ABSORBING_SPONGE_ITEM : item;
+					result = UpgradeHelper.upgrade(new ItemStack(resultItem), level);
+				}
 				entries.add(new UpgradeEntry(level, core, catalyst, base, result));
 			}
 		}

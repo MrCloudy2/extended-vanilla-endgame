@@ -1,7 +1,9 @@
 package dev.rok.eve;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 import com.mojang.serialization.Codec;
 
@@ -20,6 +22,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -80,6 +83,16 @@ public class EVE implements ModInitializer {
 	public static final BlockEntityType<AbsorbingSpongeBlockEntity> ABSORBING_SPONGE_BLOCK_ENTITY =
 			FabricBlockEntityTypeBuilder.create(AbsorbingSpongeBlockEntity::new, ABSORBING_SPONGE).build();
 
+	/**
+	 * The upgraded shulker box: holds normal shulker boxes and any other item (but
+	 * not other upgraded boxes). Obtained by upgrading a vanilla shulker box; comes
+	 * in all 16 colours plus the default, preserving/changing colour like vanilla.
+	 */
+	public static final List<UpgradedShulkerBoxBlock> UPGRADED_SHULKER_BLOCKS = new ArrayList<>();
+	private static final Map<DyeColor, Item> UPGRADED_SHULKER_ITEMS = new EnumMap<>(DyeColor.class);
+	private static Item upgradedShulkerDefaultItem;
+	public static final BlockEntityType<UpgradedShulkerBoxBlockEntity> UPGRADED_SHULKER_BOX_BLOCK_ENTITY = makeShulkerBoxes();
+
 	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER = new UpgradeRecipe.Serializer();
 
 	/**
@@ -105,6 +118,48 @@ public class EVE implements ModInitializer {
 						.strength(0.6F)
 						.sound(SoundType.SPONGE)
 						.setId(key)));
+	}
+
+	private static BlockEntityType<UpgradedShulkerBoxBlockEntity> makeShulkerBoxes() {
+		registerShulkerBox(null);
+		for (DyeColor color : DyeColor.values()) {
+			registerShulkerBox(color);
+		}
+		return FabricBlockEntityTypeBuilder.create(UpgradedShulkerBoxBlockEntity::new,
+				UPGRADED_SHULKER_BLOCKS.toArray(new Block[0])).build();
+	}
+
+	private static void registerShulkerBox(@org.jspecify.annotations.Nullable DyeColor color) {
+		String name = color == null ? "upgraded_shulker_box" : "upgraded_" + color.getName() + "_shulker_box";
+		ResourceKey<Block> bkey = ResourceKey.create(Registries.BLOCK, id(name));
+		UpgradedShulkerBoxBlock block = Registry.register(BuiltInRegistries.BLOCK, bkey,
+				new UpgradedShulkerBoxBlock(color, BlockBehaviour.Properties.of()
+						.mapColor(color == null ? MapColor.COLOR_PURPLE : color.getMapColor())
+						.forceSolidOn()
+						.strength(2.0F)
+						.dynamicShape()
+						.noOcclusion()
+						.setId(bkey)));
+		ResourceKey<Item> ikey = ResourceKey.create(Registries.ITEM, id(name));
+		Item item = Registry.register(BuiltInRegistries.ITEM, ikey, new BlockItem(block,
+				new Item.Properties().useBlockDescriptionPrefix().stacksTo(1).rarity(Rarity.RARE).setId(ikey)));
+		UPGRADED_SHULKER_BLOCKS.add(block);
+		if (color == null) {
+			upgradedShulkerDefaultItem = item;
+		} else {
+			UPGRADED_SHULKER_ITEMS.put(color, item);
+		}
+	}
+
+	/** The upgraded shulker box item for a colour (null = default). */
+	public static Item upgradedShulkerItem(@org.jspecify.annotations.Nullable DyeColor color) {
+		return color == null ? upgradedShulkerDefaultItem : UPGRADED_SHULKER_ITEMS.get(color);
+	}
+
+	/** True for any of the upgraded shulker box items (used to forbid nesting). */
+	public static boolean isUpgradedShulkerBox(ItemStack stack) {
+		return stack.getItem() instanceof BlockItem blockItem
+				&& blockItem.getBlock() instanceof UpgradedShulkerBoxBlock;
 	}
 
 	private static Item registerSpongeItem() {
@@ -134,6 +189,7 @@ public class EVE implements ModInitializer {
 		Registry.register(BuiltInRegistries.DATA_COMPONENT_TYPE, id("upgrade_level"), UPGRADE_LEVEL);
 		Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("upgrade"), UPGRADE_SERIALIZER);
 		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("absorbing_sponge"), ABSORBING_SPONGE_BLOCK_ENTITY);
+		Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, id("upgraded_shulker_box"), UPGRADED_SHULKER_BOX_BLOCK_ENTITY);
 
 		ItemGroupEvents.modifyEntriesEvent(tab("ingredients")).register(entries -> {
 			UPGRADE_CORES.forEach(core -> entries.accept(new ItemStack(core)));
@@ -141,8 +197,13 @@ public class EVE implements ModInitializer {
 		});
 		ItemGroupEvents.modifyEntriesEvent(tab("combat")).register(entries ->
 				entries.accept(new ItemStack(WINGED_NETHERITE_CHESTPLATE)));
-		ItemGroupEvents.modifyEntriesEvent(tab("functional_blocks")).register(entries ->
-				entries.accept(new ItemStack(ABSORBING_SPONGE_ITEM)));
+		ItemGroupEvents.modifyEntriesEvent(tab("functional_blocks")).register(entries -> {
+			entries.accept(new ItemStack(ABSORBING_SPONGE_ITEM));
+			entries.accept(new ItemStack(upgradedShulkerDefaultItem));
+			for (DyeColor color : DyeColor.values()) {
+				entries.accept(new ItemStack(UPGRADED_SHULKER_ITEMS.get(color)));
+			}
+		});
 	}
 
 	/** Vanilla creative-tab fields are private in this version, so build the key from its id. */

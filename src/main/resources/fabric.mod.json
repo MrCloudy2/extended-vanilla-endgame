@@ -14,10 +14,16 @@
 		"main": [
 			"dev.rok.eve.EVE"
 		],
+		"client": [
+			"dev.rok.eve.EVEClient"
+		],
 		"jei_mod_plugin": [
 			"dev.rok.eve.compat.jei.EVEJeiPlugin"
 		]
 	},
+	"mixins": [
+		"eve.mixins.json"
+	],
 	"depends": {
 		"fabricloader": ">=0.19.3",
 		"minecraft": "~1.21.11",

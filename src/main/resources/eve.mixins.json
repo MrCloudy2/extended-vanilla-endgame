@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "dev.rok.eve.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"BlockEntityAccessor",
+		"BlockEntityValidationMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

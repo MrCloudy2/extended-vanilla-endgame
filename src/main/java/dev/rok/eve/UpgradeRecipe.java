@@ -8,24 +8,29 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 
 /**
  * Smithing table recipe that takes any item from the eve:upgradable tag at
  * upgrade level (level - 1), the matching upgrade core as template, and a
- * per-level catalyst, and outputs the same item upgraded to {@code level}
- * with all its enchantments and damage preserved.
+ * per-level catalyst, and outputs the upgraded result.
  *
  * (1.21.11 variant: implements SmithingRecipe directly — this version has no
  * SimpleSmithingRecipe/CommonInfo, and RecipeSerializer is an interface.)
@@ -57,9 +62,20 @@ public class UpgradeRecipe implements SmithingRecipe {
 
 	@Override
 	public ItemStack assemble(SmithingRecipeInput input, HolderLookup.Provider provider) {
-		ItemStack result = input.base().is(Items.SPONGE)
-				? new ItemStack(EVE.ABSORBING_SPONGE_ITEM)
-				: input.base().copyWithCount(1);
+		ItemStack base = input.base();
+		// Any vanilla shulker box -> the upgraded shulker box of the same colour,
+		// carrying its contents. This is the only tier, so no level/lore is applied.
+		if (base.is(ItemTags.SHULKER_BOXES)) {
+			DyeColor color = Block.byItem(base.getItem()) instanceof ShulkerBoxBlock shulker ? shulker.getColor() : null;
+			ItemStack result = new ItemStack(EVE.upgradedShulkerItem(color));
+			ItemContainerContents contents = base.get(DataComponents.CONTAINER);
+			if (contents != null) {
+				result.set(DataComponents.CONTAINER, contents);
+			}
+			return result;
+		}
+		// A vanilla sponge becomes the absorbing sponge; everything else keeps its identity.
+		ItemStack result = base.is(Items.SPONGE) ? new ItemStack(EVE.ABSORBING_SPONGE_ITEM) : base.copyWithCount(1);
 		return UpgradeHelper.upgrade(result, this.level);
 	}
 
