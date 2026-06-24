@@ -1,6 +1,6 @@
 package dev.rok.eve.mixin;
 
-import dev.rok.eve.EVE;
+import dev.rok.eve.UpgradedShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class BlockEntityValidationMixin {
 	@Inject(method = "isValidBlockState", at = @At("HEAD"), cancellable = true)
 	private void eve$allowUpgradedShulkerBox(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-		if (state.is(EVE.UPGRADED_SHULKER_BOX)) {
+		if (state.getBlock() instanceof UpgradedShulkerBoxBlock) {
 			cir.setReturnValue(true);
 		}
 	}

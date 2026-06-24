@@ -31,12 +31,12 @@ public class UpgradedShulkerBoxBlockEntity extends ShulkerBoxBlockEntity {
 
 	@Override
 	public boolean canPlaceItem(int slot, ItemStack stack) {
-		return !stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM);
+		return !EVE.isUpgradedShulkerBox(stack);
 	}
 
 	@Override
 	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
 		// Hoppers may insert normal shulker boxes and any item, but not a +1 box.
-		return !stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM);
+		return !EVE.isUpgradedShulkerBox(stack);
 	}
 }

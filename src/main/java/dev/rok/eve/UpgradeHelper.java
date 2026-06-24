@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.ItemLore;
@@ -51,7 +52,7 @@ public final class UpgradeHelper {
 		if (stack.is(Items.SPONGE) || stack.is(EVE.ABSORBING_SPONGE_ITEM)) {
 			return SPONGE_MAX_LEVEL;
 		}
-		if (stack.is(Items.SHULKER_BOX) || stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM)) {
+		if (stack.is(ItemTags.SHULKER_BOXES) || EVE.isUpgradedShulkerBox(stack)) {
 			return 1; // shulker box only goes to +1
 		}
 		return MAX_LEVEL;

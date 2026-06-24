@@ -13,6 +13,6 @@
 		"eve:winged_netherite_chestplate",
 		"minecraft:sponge",
 		"eve:absorbing_sponge",
-		"minecraft:shulker_box"
+		"#minecraft:shulker_boxes"
 	]
 }

@@ -11,9 +11,15 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -64,23 +70,20 @@ public class UpgradeRecipe extends SimpleSmithingRecipe {
 
 	@Override
 	public ItemStack assemble(SmithingRecipeInput input) {
-		// A vanilla sponge becomes the absorbing sponge, and a vanilla shulker box
-		// becomes the upgraded shulker box (carrying its contents over); everything
-		// else keeps its identity.
 		ItemStack base = input.base();
-		ItemStack result;
-		if (base.is(Items.SPONGE)) {
-			result = new ItemStack(EVE.ABSORBING_SPONGE_ITEM);
-		} else if (base.is(Items.SHULKER_BOX)) {
-			result = new ItemStack(EVE.UPGRADED_SHULKER_BOX_ITEM);
-			net.minecraft.world.item.component.ItemContainerContents contents =
-					base.get(net.minecraft.core.component.DataComponents.CONTAINER);
+		// Any vanilla shulker box -> the upgraded shulker box of the same colour,
+		// carrying its contents. This is the only tier, so no level/lore is applied.
+		if (base.is(ItemTags.SHULKER_BOXES)) {
+			DyeColor color = Block.byItem(base.getItem()) instanceof ShulkerBoxBlock shulker ? shulker.getColor() : null;
+			ItemStack result = new ItemStack(EVE.upgradedShulkerItem(color));
+			ItemContainerContents contents = base.get(DataComponents.CONTAINER);
 			if (contents != null) {
-				result.set(net.minecraft.core.component.DataComponents.CONTAINER, contents);
+				result.set(DataComponents.CONTAINER, contents);
 			}
-		} else {
-			result = base.copyWithCount(1);
+			return result;
 		}
+		// A vanilla sponge becomes the absorbing sponge; everything else keeps its identity.
+		ItemStack result = base.is(Items.SPONGE) ? new ItemStack(EVE.ABSORBING_SPONGE_ITEM) : base.copyWithCount(1);
 		return UpgradeHelper.upgrade(result, this.level);
 	}
 

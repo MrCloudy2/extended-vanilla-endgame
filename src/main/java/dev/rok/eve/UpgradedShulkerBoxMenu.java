@@ -38,7 +38,7 @@ public class UpgradedShulkerBoxMenu extends AbstractContainerMenu {
 				this.addSlot(new Slot(container, col + row * 9, 8 + col * 18, 18 + row * 18) {
 					@Override
 					public boolean mayPlace(ItemStack stack) {
-						return !stack.is(EVE.UPGRADED_SHULKER_BOX_ITEM);
+						return !EVE.isUpgradedShulkerBox(stack);
 					}
 				});
 			}

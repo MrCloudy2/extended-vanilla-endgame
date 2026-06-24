@@ -18,5 +18,21 @@
 	"category.eve.gear_upgrade.requires": "Requires a +%s item (or the base item for +1)",
 	"item.eve.upgrade_core.catalyst": "Combine with: %s",
 	"block.eve.upgraded_shulker_box": "Upgraded Shulker Box",
-	"container.eve.upgraded_shulker_box": "Upgraded Shulker Box"
+	"container.eve.upgraded_shulker_box": "Upgraded Shulker Box",
+	"block.eve.upgraded_white_shulker_box": "Upgraded White Shulker Box",
+	"block.eve.upgraded_orange_shulker_box": "Upgraded Orange Shulker Box",
+	"block.eve.upgraded_magenta_shulker_box": "Upgraded Magenta Shulker Box",
+	"block.eve.upgraded_light_blue_shulker_box": "Upgraded Light Blue Shulker Box",
+	"block.eve.upgraded_yellow_shulker_box": "Upgraded Yellow Shulker Box",
+	"block.eve.upgraded_lime_shulker_box": "Upgraded Lime Shulker Box",
+	"block.eve.upgraded_pink_shulker_box": "Upgraded Pink Shulker Box",
+	"block.eve.upgraded_gray_shulker_box": "Upgraded Gray Shulker Box",
+	"block.eve.upgraded_light_gray_shulker_box": "Upgraded Light Gray Shulker Box",
+	"block.eve.upgraded_cyan_shulker_box": "Upgraded Cyan Shulker Box",
+	"block.eve.upgraded_purple_shulker_box": "Upgraded Purple Shulker Box",
+	"block.eve.upgraded_blue_shulker_box": "Upgraded Blue Shulker Box",
+	"block.eve.upgraded_brown_shulker_box": "Upgraded Brown Shulker Box",
+	"block.eve.upgraded_green_shulker_box": "Upgraded Green Shulker Box",
+	"block.eve.upgraded_red_shulker_box": "Upgraded Red Shulker Box",
+	"block.eve.upgraded_black_shulker_box": "Upgraded Black Shulker Box"
 }

@@ -1,10 +1,14 @@
 package dev.rok.eve;
 
+import java.util.Optional;
+
 import org.jspecify.annotations.Nullable;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -14,16 +18,20 @@ import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * The +1 shulker box block. Extends the vanilla shulker box so it inherits all
- * of its behaviour — lid opening, collision, contents-preserving drops, the
+ * The upgraded shulker box block. Extends the vanilla shulker box so it inherits
+ * all of its behaviour — lid opening, collision, contents-preserving drops, the
  * entity renderer — but uses its own block entity (which relaxes the slot rule
- * to allow normal shulker boxes inside, but not +1 boxes).
+ * to allow normal shulker boxes inside, but not upgraded boxes). One block per
+ * dye colour, plus the default.
  */
 public class UpgradedShulkerBoxBlock extends ShulkerBoxBlock {
-	public static final MapCodec<UpgradedShulkerBoxBlock> CODEC = simpleCodec(UpgradedShulkerBoxBlock::new);
+	public static final MapCodec<UpgradedShulkerBoxBlock> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
+			DyeColor.CODEC.optionalFieldOf("color").forGetter(b -> Optional.ofNullable(b.getColor())),
+			propertiesCodec()
+	).apply(i, (color, properties) -> new UpgradedShulkerBoxBlock(color.orElse(null), properties)));
 
-	public UpgradedShulkerBoxBlock(Properties properties) {
-		super(null, properties); // null colour => default (purple) shulker texture
+	public UpgradedShulkerBoxBlock(@Nullable DyeColor color, Properties properties) {
+		super(color, properties);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
