@@ -37,7 +37,7 @@ Smithing table: `Upgrade Core +N` + `your +(N-1) item` + `catalyst`:
 
 Each level grants (cumulative): **+1 attack damage**, **+1 armor**, **+0.5 armor toughness**, **+20% mining speed**, **+25% durability**. Enchantments and damage are preserved.
 
-![Core tier textures](docs/core_tiers.png)
+![Core tier textures — +10 shimmers through every hue](docs/core_tiers.gif)
 
 Upgradable: netherite sword/spear/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, a Sponge, and any Shulker Box (tag `eve:upgradable` — datapacks can extend it).
 
