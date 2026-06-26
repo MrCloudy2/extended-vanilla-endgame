@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0 — for Minecraft 1.21.11
+
+### Added
+- **Upgraded Shulker Box**: upgrade any shulker box (Core +1 + shulker box + iron block) into one that can store normal shulker boxes — but not other upgraded boxes, so no infinite nesting. It's a real shulker box (animated lid, keeps its contents when broken), comes in all 16 colours plus the default, preserves colour and contents through the upgrade, and is dyeable like a vanilla shulker box (combine with a dye to recolour).
+- Upgraded shulker boxes can be **washed in a water cauldron** to reset to the default colour (keeps contents, uses one water level), like vanilla shulkers.
+- Upgraded shulker box items carry a small gold emblem on the lid so they're recognisable next to vanilla shulkers.
+- Upgraded shulker box items show their contents in the tooltip (first few items + "and N more"), exactly like vanilla shulker boxes — so shulker-box preview mods work on them too.
+- Upgraded shulker boxes are full vanilla drop-ins: mined fastest with a pickaxe, knocked off and dropped by pistons, and they always drop with their contents (even from explosions); an open lid no longer suffocates entities.
+- The Absorbing Sponge is now mined fastest with a hoe, like a vanilla sponge.
+
 ## 0.3.4 — for Minecraft 1.21.11
 
 ### Added

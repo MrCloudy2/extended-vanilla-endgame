@@ -31,6 +31,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.equipment.ArmorMaterials;
@@ -38,8 +39,10 @@ import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 
 public class EVE implements ModInitializer {
 	public static final String MOD_ID = "eve";
@@ -96,6 +99,17 @@ public class EVE implements ModInitializer {
 	public static final List<UpgradedShulkerBoxBlock> UPGRADED_SHULKER_BLOCKS = new ArrayList<>();
 	private static final Map<DyeColor, Item> UPGRADED_SHULKER_ITEMS = new EnumMap<>(DyeColor.class);
 	private static Item upgradedShulkerDefaultItem;
+
+	/**
+	 * Mirror of vanilla {@code Blocks.NOT_CLOSED_SHULKER}: while the lid is up the
+	 * box is not a full cube, so it must not suffocate entities or block their view.
+	 * MUST be declared before {@link #UPGRADED_SHULKER_BOX_BLOCK_ENTITY} (which runs
+	 * {@link #makeShulkerBoxes()} at class-init), or it is still null when the blocks
+	 * register and every box ends up with a null isSuffocating predicate.
+	 */
+	private static final BlockBehaviour.StatePredicate NOT_CLOSED_SHULKER =
+			(state, level, pos) -> !(level.getBlockEntity(pos) instanceof ShulkerBoxBlockEntity sbe) || sbe.isClosed();
+
 	public static final BlockEntityType<UpgradedShulkerBoxBlockEntity> UPGRADED_SHULKER_BOX_BLOCK_ENTITY = makeShulkerBoxes();
 
 	public static final RecipeSerializer<UpgradeRecipe> UPGRADE_SERIALIZER = new UpgradeRecipe.Serializer();
@@ -144,10 +158,15 @@ public class EVE implements ModInitializer {
 						.strength(2.0F)
 						.dynamicShape()
 						.noOcclusion()
+						.isSuffocating(NOT_CLOSED_SHULKER)
+						.isViewBlocking(NOT_CLOSED_SHULKER)
+						.pushReaction(PushReaction.DESTROY)
 						.setId(bkey)));
 		ResourceKey<Item> ikey = ResourceKey.create(Registries.ITEM, id(name));
 		Item item = Registry.register(BuiltInRegistries.ITEM, ikey, new BlockItem(block,
-				new Item.Properties().useBlockDescriptionPrefix().stacksTo(1).rarity(Rarity.RARE).setId(ikey)));
+				new Item.Properties().useBlockDescriptionPrefix().stacksTo(1).rarity(Rarity.RARE)
+						.component(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
+						.setId(ikey)));
 		UPGRADED_SHULKER_BLOCKS.add(block);
 		if (color == null) {
 			upgradedShulkerDefaultItem = item;
