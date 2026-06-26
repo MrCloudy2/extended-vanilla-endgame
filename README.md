@@ -81,7 +81,7 @@ Upgrade any **Shulker Box** in the smithing table (Core +1 + shulker box + iron 
 
 ![Upgraded Shulker Box recipe](docs/recipe_shulker.png)
 
-It is a real shulker box — same animated lid, texture, and "contents stay in the item when you break it" — with one difference:
+It is a real shulker box — same animated lid and the same "contents stay in the item when you break it" behaviour, and (like a vanilla box) its item previews the first few contents in the tooltip. A small **gold emblem on the lid** sets it apart at a glance. One difference in behaviour:
 
 - **It can hold normal shulker boxes** (and any other item). In vanilla you can't put a shulker box inside a shulker box; an upgraded box lets you. It will **not** accept another upgraded box, so there's no infinite nesting.
 
