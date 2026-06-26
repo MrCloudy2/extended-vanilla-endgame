@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "dev.rok.eve.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"BlockEntityAccessor",
+		"BlockEntityValidationMixin",
+		"CauldronDispatcherInvoker"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

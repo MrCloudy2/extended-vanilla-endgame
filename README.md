@@ -39,7 +39,7 @@ Each level grants (cumulative): **+1 attack damage**, **+1 armor**, **+0.5 armor
 
 ![Core tier textures](docs/core_tiers.png)
 
-Upgradable: netherite sword/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, and a plain Sponge (tag `eve:upgradable` — datapacks can extend it).
+Upgradable: netherite sword/spear/pickaxe/axe/shovel/hoe/helmet/leggings/boots, the Winged Netherite Chestplate, a Sponge, and any Shulker Box (tag `eve:upgradable` — datapacks can extend it).
 
 ### 3. The chestplate gate
 
@@ -51,11 +51,11 @@ A plain netherite chestplate **cannot** be upgraded. First craft a **Wing Smithi
 [Phantom Membrane] [Netherite Ingot] [Phantom Membrane]
 ```
 
-![Wing Smithing Template recipe](docs/recipe_wing_template.png)
+![Wing Smithing Template recipe](docs/recipe_wing.png)
 
 Then in the smithing table: `Wing Template` + `Netherite Chestplate` + `Elytra` → **Winged Netherite Chestplate** — full netherite protection *and* elytra flight (vanilla glider component), and it's the only chestplate that accepts +N upgrades.
 
-![Winged Netherite Chestplate recipe](docs/recipe_winged_chestplate.png)
+![Winged Netherite Chestplate recipe](docs/recipe_winged.png)
 
 ### 4. The Absorbing Sponge
 
@@ -75,6 +75,18 @@ It behaves like a vanilla sponge with two twists:
 
 The Absorbing Sponge item is fireproof, so it survives a swim in the lava it's meant to drink. It caps at +7 even though Upgrade Cores go to +10.
 
+### 5. The Upgraded Shulker Box
+
+Upgrade any **Shulker Box** in the smithing table (Core +1 + shulker box + iron block) and it becomes an **Upgraded Shulker Box**. The upgrade keeps the box's **colour and contents**.
+
+![Upgraded Shulker Box recipe](docs/recipe_shulker.png)
+
+It is a real shulker box — same animated lid and the same "contents stay in the item when you break it" behaviour, and (like a vanilla box) its item previews the first few contents in the tooltip. A small **gold emblem on the lid** sets it apart at a glance. One difference in behaviour:
+
+- **It can hold normal shulker boxes** (and any other item). In vanilla you can't put a shulker box inside a shulker box; an upgraded box lets you. It will **not** accept another upgraded box, so there's no infinite nesting.
+
+It comes in all 16 colours plus the default, and it's **dyeable** exactly like a vanilla shulker box: combine it with a dye in a crafting grid to recolour it (contents preserved), and re-dye it any time.
+
 ## Building
 
 ```
@@ -82,8 +94,3 @@ The Absorbing Sponge item is fireproof, so it survives a swim in the lava it's m
 ```
 
 Output: `build/libs/extended-vanilla-endgame-<version>.jar`. Requires Java 25, Fabric Loader ≥ 0.19.3 and Fabric API. Gradle runs on Java 25 (path pinned in `gradle.properties` via `org.gradle.java.home`; adjust for your machine). Uses Mojang official mappings (Yarn was discontinued after 1.21.11).
-
-## TODO
-
-- Custom texture for the Wing Smithing Template (cores have per-tier recolored textures; the winged chestplate now composites the chestplate over the elytra)
-- Elytra wings back-rendering for the winged chestplate (flight works, wings just don't show)
